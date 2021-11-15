@@ -1,0 +1,37 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64"
+  config.vm.box_check_update = false
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+  end
+  config.vm.define "lamp" do |lamp|
+    lamp.vm.network "private_network", ip: "192.168.56.10"
+    lamp.vm.hostname = "lamp"
+    lamp.vm.provision "shell", inline: <<-SHELL
+      sudo apt-get clean
+      sudo apt update -y
+      sudo apt install apache2 php-mysql php7.4 mysql-server -y
+    SHELL
+  end
+
+  config.vm.define "docker" do |docker|
+    docker.vm.network "private_network", ip: "192.168.56.11"
+    docker.vm.hostname = "docker"
+    docker.vm.provision "shell", inline: <<-SHELL
+      sudo apt-get clean
+      sudo apt update -y
+      sudo apt-get remove docker docker-engine docker.io containerd runc -y
+      sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common -y
+      sudo apt-get install docker.io -y
+      sudo apt-get update -y
+    SHELL
+  end
+
+  config.vm.provision "shell" , inline: <<-SHELL
+    apt-get clean
+    apt update -y
+  SHELL
+end
