@@ -11,17 +11,17 @@ def client():
     client = APP.test_client()
     yield client
 def test_valid_transaction(client):
- card = {
-    "status": True,
-    "number":123456,
-    "limit":1000,
-    "transaction":{
-     "amount":500
+    card = {
+        "status": True,
+        "number":123456,
+        "limit":1000,
+        "transaction":{
+        "amount":500
+        }
     }
-   }
- rv = client.post("/api/transaction",json=card)
- assert True == rv.get_json().get("approved")
- assert 500 == rv.get_json().get("newLimit")
+    rv = client.post("/api/transaction",json=card)
+    assert True == rv.get_json().get("approved")
+    assert 500 == rv.get_json().get("newLimit")
 def test_above_limit(client):
     card = {
     "status": True,
