@@ -22,9 +22,7 @@ pipeline {
          }
       }
       steps{
-      sh 'docker build
-     https://github.com/AsyncDeveloper245/cloud-devops-materials.git -t
-     myapp:latest'
+      sh 'docker build https://github.com/AsyncDeveloper245/cloud-devops-materials.git -t myapp:latest'
       }
    }
    stage('Deploy') {
