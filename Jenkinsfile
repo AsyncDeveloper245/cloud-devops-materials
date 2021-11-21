@@ -18,7 +18,7 @@ pipeline {
    stage('Build') {
       agent {
          node {
-            label 'Dockerserver';
+            label 'DockerServer';
          }
       }
       steps{
@@ -28,7 +28,7 @@ pipeline {
    stage('Deploy') {
       agent {
          node {
-            label 'Dockerserver';
+            label 'DockerServer';
          }
       }
     steps {
