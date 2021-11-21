@@ -16,17 +16,25 @@ pipeline {
     }
    }
    stage('Build') {
+      agent {
+         node {
+            label 'Dockerserver'
+         }
+      }
       steps{
-      sh 'exit 1'
+      sh 'docker build
+     https://github.com/AsyncDeveloper245/cloud-devops-materials.git -t
+     myapp:latest'
       }
    }
-   stage('Delivery') {
-    steps {
-     sh 'exit 1'
-} }
    stage('Deploy') {
+      agent {
+         node {
+            label 'Dockerserver'
+         }
+      }
     steps {
-     sh 'exit 1'
+     sh 'docker run -tdi -p 5000:5000 myapp:latest'
     }
 } }
 }
